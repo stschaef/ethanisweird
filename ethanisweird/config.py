@@ -25,5 +25,5 @@ MAX_CONTENT_LENGTH = 16 * 1024 * 1024
 # Database file is var/insta485.sqlite3
 DATABASE_FILENAME = os.path.join(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
-    'var', 'ethanisweird.sqlite3'
+    'tmp', 'ethanisweird.sqlite3'
 )
