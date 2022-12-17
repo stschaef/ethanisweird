@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# ethanisweirdrun
+#
+# Clean, build and start server
+#
+# Andrew DeOrio <awdeorio@umich.edu>
+
+
+# Stop on errors, print commands
+set -e
+set -x
+
+# Clean
+rm -rf var/
+
+# Build
+./bin/ethanisweirddb create
+
+# Serve
+export FLASK_DEBUG=True
+export FLASK_APP=ethanisweird
+export ethanisweird_SETTINGS=config.py
+flask run --host 0.0.0.0 --port 8000

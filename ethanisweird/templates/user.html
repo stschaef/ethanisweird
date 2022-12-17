@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Ethan Is Weird</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container-fluid">
+		<!-- Banner/Header -->
+		<div class="row">
+			<div class="col">
+                <div class="row">
+                    <a href="/"><i class="fas fa-camera-retro fa-3x" style="margin:5px;margin-right:15px"></i></a>
+                    <div style="border-left: solid #000000;padding:5px"></div>
+                    <h1> Ethan Is Weird </h1>
+                </div>
+            </div>
+            <div class="col" style="margin:10px; ">
+                <div class="row float-right">
+                    <a href="/explore/"><h4 style="margin-right: 10px">explore</h4></a>
+                    <div style="border-left: solid #000000;padding:5px"></div>
+                    <a href = "/u/{{session['username']}}/"><h4>{{session['username']}}</h4></a>
+                </div>
+            </div>
+		</div>
+		<!-- Line -->
+		<hr style="border-color: black;">
+
+		<!-- Contains everything below header -->
+		<div class="container-fluid" style="width: 75%;margin-top: 50px">
+			<!-- current user's page username -->
+			<div class="row">
+				<h1><a href="/u/{{users['username']}}/"> {{users['username']}}</a></h1>
+			</div>
+			<!-- "Edit Profile | logout" & Following vs Not Following w/ btns  -->
+			<div class="row">
+				<!-- TODO: Figure out how to check session user vs user's username-->
+				{% if users['username'] == session['username'] %}
+					<a href="/accounts/edit/"><h5>Edit profile </h5></a>
+					<p style="margin-left:5px;margin-right: 5px"> | </p>
+					<a href="/accounts/logout/"><h5> logout</h5></a>
+				{% else %}
+					{% if follows['does_follow'] == 1 %}
+					<p style="margin: 5px">following</p>
+					<form action="" method="post" enctype="multipart/form-data">
+					  <input type="submit" name="unfollow" value="unfollow"/>
+					  <input type="hidden" name="username" value="{{users['username']}}"/>
+					</form>
+					{% else %}
+					<p style="margin: 5px">not following</p>
+					<form action="" method="post" enctype="multipart/form-data">
+					  <input type="submit" name="follow" value="follow"/>
+					  <input type="hidden" name="username" value="{{users['username']}}"/>
+					</form>
+					{% endif %}
+				{% endif %}
+			</div>
+			<!-- # Posts, Followers, & Following w/ links -->
+			<div class="row">
+				{% if posts|length == 1 %}
+					{% if follows['followers'] == 1 %}
+						<p> {{posts|length}} post 
+						<a href="/u/{{users['username']}}/followers/">{{follows['followers']}} follower</a> 
+						<a href="/u/{{users['username']}}/following/">{{follows['following']}} following</a>
+						</p>
+					{% else %}
+						<p>{{posts|length}} post 
+						<a href="/u/{{users['username']}}/followers/">{{follows['followers']}} followers</a> 
+						<a href="/u/{{users['username']}}/following/">{{follows['following']}} following</a>
+						</p>
+					{% endif %}	
+				{% else %}
+					{% if followers == 1 %}
+						<p>{{posts|length}} posts 
+						<a href="/u/{{users['username']}}/followers/">{{follows['followers']}} follower</a> 
+						<a href="/u/{{users['username']}}/following/">{{follows['following']}} following</a></p>
+					{% else %}
+						<p>{{posts|length}} posts 
+						<a href="/u/{{users['username']}}/followers/">{{follows['followers']}} followers</a>
+						<a href="/u/{{users['username']}}/following/">{{follows['following']}} following</a>
+						</p>
+					{% endif %}	
+				{% endif %}
+			</div>
+			<!-- Displays current page owner's full name -->
+			<div class="row">
+				<p>{{users['fullname']}}</p>
+			</div>
+			<!-- File upload box  -->
+			{% if users['username'] == session['username'] %}
+			<div class="row" style="border: solid;padding: 20px; margin-bottom: 25px">
+				<form action="" method="post" enctype="multipart/form-data">
+				  <input type="file" name="file">
+				  <input type="submit" name="create_post" value="upload new post"/>
+				</form>
+			</div>
+			{% endif %}
+
+			<div class="row"  style="margin-bottom: 20px">
+				{% for post in posts %}
+					<div class="col">
+						<a href="/p/{{post['postid']}}/"><img src ={{url_for("download_file", filename=post['filename'])}} alt = "posted image" height = "250"></a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript [JQuery & Popper.js(bundle)] -->
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
+</body>
+</html>

@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# ethanisweirdrun
+#
+# Clean, build and start server
+#
+# Andrew DeOrio <awdeorio@umich.edu>
+
+
+# Stop on errors, print commands
+set -e
+set -x
+
+# Run
+pytest -v tests
+pycodestyle ethanisweird
+pydocstyle ethanisweird
+pylint --reports=n --disable=cyclic-import --disable=no-member ethanisweird
+./bin/ethanisweirdtest-html
