@@ -29,7 +29,8 @@ def show_login():
         get_password = "SELECT password FROM users WHERE username = ?"
         db_password = get_db().cursor().execute(
             get_password, (req['username'],)).fetchone()
-
+        print(req)
+        print(db_password)
         algorithm = 'sha512'
 
         # salt with always be between indices 7 and 39, inclusive
@@ -49,9 +50,9 @@ def show_login():
     return '''
         <!DOCTYPE html>
         <html lang="en">
-        <head><title>Insta485</title></head>
+        <head><title>Ethan Is Weird</title></head>
         <body>
-        <h1><a href = "/">Insta485</a></h1>
+        <h1><a href = "/">Ethan Is Weird</a></h1>
 
         <!-- DO NOT CHANGE THIS (aside from styling) -->
         <form action="" method="post" enctype="multipart/form-data">

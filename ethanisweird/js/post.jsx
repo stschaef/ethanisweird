@@ -60,7 +60,7 @@ class Post extends React.Component {
                         {this.state.owner}
                         </p></a>;
       const image = <a href={this.state.post_show_url}>
-                    <img src={this.state.img_url} alt="Posted image" style={{width: '400px'}}/>
+                    <img src={this.state.img_url} alt="Posted image" style={{width: "55%", maxHeight: "800px"}}/>
                     </a>;
       const comments_source = this.props.url + "comments/";
       const likes_source = this.props.url + "likes/";

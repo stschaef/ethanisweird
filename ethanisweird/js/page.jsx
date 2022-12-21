@@ -122,7 +122,7 @@ class Page extends React.Component {
           loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{textAlign: 'center'}}>
-              <b>Yay! You have seen it all. If this is empty and you haven't seen anything, try following someone via the explore header! </b>
+              <b>Yay! You have seen it all. </b>
             </p>
           }>
 

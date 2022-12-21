@@ -62,12 +62,12 @@ def get_posts():
     )
     posts_ = cur.fetchall()
     select_following = connection.execute(
-        'SELECT username2 FROM following WHERE username1 = ?', (logname,)
+        'SELECT username FROM users'
         ).fetchall()
 
     following_list = []
     for name in select_following:
-        following_list.append(name['username2'])
+        following_list.append(name['username'])
 
     context["results"] = []
 
